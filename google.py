@@ -13,13 +13,10 @@ SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 def main():
     method = Methods()
     method.get_calendar_list()
-    method.get_events_list()
+    method.get_events_list("alexe0110@gmail.com", 5)
 
 
 class Auth():
-    """Shows basic usage of the Google Calendar API.
-    Prints the start and name of the next 10 events on the user's calendar.
-    """
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -43,14 +40,17 @@ class Auth():
 
 
 class Methods(Auth):
-    def get_events_list(self):
+    def get_events_list(self, calendarId='ru.russian#holiday@group.v.calendar.google.com', n=10):
+        """
+        :return: Предстоящие n событий в указанном календаре
+        """
         # Call the Calendar API
         now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
         print('Getting the upcoming 10 events')
 
-        events_result = self.service.events().list(calendarId='ru.russian#holiday@group.v.calendar.google.com',
+        events_result = self.service.events().list(calendarId=calendarId,
                                                    timeMin=now,
-                                                   maxResults=5, singleEvents=True,
+                                                   maxResults=n, singleEvents=True,
                                                    orderBy='startTime').execute()
         events = events_result.get('items', [])
 
