@@ -47,4 +47,5 @@ env.bak/
 venv.bak/
 
 token.pickle
-#.idea/
+.idea/
+//credentials.json
