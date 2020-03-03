@@ -15,16 +15,15 @@ def main():
     # method.get_calendar_list()
     method.get_events_list("o685qbmudvk6su1j6di61utk8k@group.calendar.google.com", 20)
     method.create_event(
-        summary="Может все таки заплатят денег",
+        summary="Тест публичной приватности",
         location="РАБота",
         dateTime_time_start='15:00:00',
-        dateTime_date_start='2020-03-02',
+        dateTime_date_start='2020-03-04',
         dateTime_time_end='18:00:00',
-        dateTime_date_end='2020-03-02',
+        dateTime_date_end='2020-03-04',
         email='alexe0110@yandex.ru',
-        #freq='MONTHLY',
-        #freq_count=3,
-        description='На дошик',
+        visibility='public',
+        description='публичный',
         calendarId='o685qbmudvk6su1j6di61utk8k@group.calendar.google.com',
     )
 
@@ -104,6 +103,7 @@ class Methods(Auth):
             freq='DAILY',
             freq_count=1,
             description='Какое то событие',
+            visibility='default',
             calendarId='o685qbmudvk6su1j6di61utk8k@group.calendar.google.com'):
         """
         :param summary: Название
@@ -116,6 +116,7 @@ class Methods(Auth):
         :param freq: Частота повторения (DAILY ежедневно, WEEKLY - еженедельно, MONTHLY - ежемесячно) (необязательно)
         :param freq_count: Частота повторения количество (необязательно)
         :param description: Описание события (необязательно)
+        :param visibility: Настройка приватности
         :param calendarId: ID календаря (необязательно)
         :return: Ссылка на событие
         """
@@ -144,6 +145,7 @@ class Methods(Auth):
                     {'method': 'popup', 'minutes': 10},
                 ],
             },
+            "visibility": visibility
         }
 
         event = self.service.events().insert(calendarId=calendarId, body=event).execute()
