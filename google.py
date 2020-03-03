@@ -101,7 +101,7 @@ class Methods(Auth):
             dateTime_date_end,
             email,
             freq='DAILY',
-            freq_count=1,
+            freq_count=1,  # test
             description='Какое то событие',
             visibility='default',
             calendarId='o685qbmudvk6su1j6di61utk8k@group.calendar.google.com'):
@@ -148,6 +148,8 @@ class Methods(Auth):
             "visibility": visibility
         }
 
+        #dsadas
+        #dsadas
         event = self.service.events().insert(calendarId=calendarId, body=event).execute()
         print('Event created: %s' % (event.get('htmlLink')))
         return event.get('htmlLink')
