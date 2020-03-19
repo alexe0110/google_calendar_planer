@@ -5,27 +5,28 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import calendar
+from datetime import date, timedelta
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-
 def main():
     method = Methods()
     # method.get_calendar_list()
-    method.get_events_list("o685qbmudvk6su1j6di61utk8k@group.calendar.google.com", 20)
-    method.create_event(
-        summary="Тест публичной приватности",
-        location="РАБота",
-        dateTime_time_start='15:00:00',
-        dateTime_date_start='2020-03-04',
-        dateTime_time_end='18:00:00',
-        dateTime_date_end='2020-03-04',
-        email='alexe0110@yandex.ru',
-        visibility='public',
-        description='публичный',
-        calendarId='o685qbmudvk6su1j6di61utk8k@group.calendar.google.com',
-    )
+    method.get_events_list("o685qbmudvk6su1j6di61utk8k@group.calendar.google.com", tmin='2020-03-03T07:33:24.149205Z', tmax='2020-05-03T07:33:24.149205Z')
+    # method.create_event(
+    #     summary="Внушительный Костя",
+    #     location="РАБота",
+    #     dateTime_time_start='19:00:00',
+    #     dateTime_date_start='2020-03-05',
+    #     dateTime_time_end='21:00:00',
+    #     dateTime_date_end='2020-03-05',
+    #     email='alexe0110@yandex.ru',
+    #     visibility='public',
+    #     description='Очень внушительынй',
+    #     calendarId='o685qbmudvk6su1j6di61utk8k@group.calendar.google.com',
+    # )
 
 
 class Auth():
@@ -55,19 +56,31 @@ class Auth():
 
 
 class Methods(Auth):
-    def get_events_list(self, calendarId='ru.russian#holiday@group.v.calendar.google.com', n=10):
+    def get_events_list(self, calendarId='ru.russian#holiday@group.v.calendar.google.com', tmin='now', tmax='through_mounth', quantity=100):
         """
         :param calendarId: ID календаря
-        :param n: количество событий (необязательно)
-        :return: Предстоящие n событий в указанном календаре (необязательно)
+        :param tmin: Время начала в формате 2020-03-03T07:33:24.149205Z(необязательно) - по умолчанию сегодня
+        :param tmax: Время окончанния в формате 2020-03-03T07:33:24.149205Z(необязательно) - по умолчанию через месяц
+        :param quantity: Количество событий (необязательно) - по умолчанию 100
+        :return: Предстоящие quantity событий в указанном календаре
         """
-        # Call the Calendar API
+
+        # Сегодня
         now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
-        print(f'Getting the upcoming {n} events')
+
+        # Дата через месяц
+        today = date.today()
+        days = calendar.monthrange(today.year, today.month)[1]
+        through_mounth = (today + timedelta(days=days)).isoformat() + 'T23:59:59.000000Z'
+
+        if tmin == 'now': tmin = now
+        if tmax == 'through_mounth': tmax = through_mounth
 
         events_result = self.service.events().list(calendarId=calendarId,
-                                                   timeMin=now,
-                                                   maxResults=n, singleEvents=True,
+                                                   timeMin=tmin,
+                                                   timeMax=tmax,
+                                                   singleEvents=True,
+                                                   maxResults=quantity,
                                                    orderBy='startTime').execute()
         events = events_result.get('items', [])
 
@@ -76,7 +89,6 @@ class Methods(Auth):
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
             print(start, event['summary'])
-            # print(events)
 
     def get_calendar_list(self):
         """
@@ -148,12 +160,10 @@ class Methods(Auth):
             "visibility": visibility
         }
 
-        #dsadas
-        #dsadas
         event = self.service.events().insert(calendarId=calendarId, body=event).execute()
         print('Event created: %s' % (event.get('htmlLink')))
         return event.get('htmlLink')
 
-#fdfsd
+
 if __name__ == '__main__':
     main()
