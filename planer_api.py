@@ -8,13 +8,14 @@ from google.auth.transport.requests import Request
 import calendar
 from datetime import date, timedelta
 
-# If modifying these scopes, delete the file token.pickle.
+# Указание прав
 SCOPES = ['https://www.googleapis.com/auth/calendar']
+
 
 def main():
     method = Methods()
     # method.get_calendar_list()
-    method.get_events_list("o685qbmudvk6su1j6di61utk8k@group.calendar.google.com", tmin='2020-03-03T07:33:24.149205Z', tmax='2020-05-03T07:33:24.149205Z')
+    method.get_events_list(level='13', room='3', tmin='2020-03-03T07:33:24.149205Z', tmax='2020-05-03T07:33:24.149205Z')
     # method.create_event(
     #     summary="Внушительный Костя",
     #     location="РАБота",
@@ -56,12 +57,13 @@ class Auth():
 
 
 class Methods(Auth):
-    def get_events_list(self, calendarId='ru.russian#holiday@group.v.calendar.google.com', tmin='now', tmax='through_mounth', quantity=100):
+    def get_events_list(self, level, room, tmin='now', tmax='through_mounth'):
         """
-        :param calendarId: ID календаря
+        :param level: Этаж
+        :param room: Номер переговорки
         :param tmin: Время начала в формате 2020-03-03T07:33:24.149205Z(необязательно) - по умолчанию сегодня
         :param tmax: Время окончанния в формате 2020-03-03T07:33:24.149205Z(необязательно) - по умолчанию через месяц
-        :param quantity: Количество событий (необязательно) - по умолчанию 100
+        :param quantity: Количество событий (необязательно) - по умолчанию 100 - удалено!
         :return: Предстоящие quantity событий в указанном календаре
         """
 
@@ -76,11 +78,13 @@ class Methods(Auth):
         if tmin == 'now': tmin = now
         if tmax == 'through_mounth': tmax = through_mounth
 
+        # Получение calendarId
+        calendarId = self.get_calendar_id(level, room)
+
         events_result = self.service.events().list(calendarId=calendarId,
                                                    timeMin=tmin,
                                                    timeMax=tmax,
                                                    singleEvents=True,
-                                                   maxResults=quantity,
                                                    orderBy='startTime').execute()
         events = events_result.get('items', [])
 
@@ -98,7 +102,7 @@ class Methods(Auth):
         while True:
             calendar_list = self.service.calendarList().list(pageToken=page_token).execute()
             for calendar_list_entry in calendar_list['items']:
-                print(calendar_list_entry['summary'], calendar_list_entry['id'])
+                print(calendar_list_entry['summary'], calendar_list_entry['id'], calendar_list_entry['colorId'])
             page_token = calendar_list.get('nextPageToken')
             if not page_token:
                 break
@@ -164,6 +168,45 @@ class Methods(Auth):
         print('Event created: %s' % (event.get('htmlLink')))
         return event.get('htmlLink')
 
+    def get_calendar_id(self, level, room):
+        """
+        Возвращеает индентификатор календаря для укзанной переговорки и указывает нужный токен для нужного этажа
+        :param level: Этаж
+        :param room: Номер переговорки
+        :return: Идентификатор
+        """
+        # Справочник календарей для переговорок
+        TOKEN_13 = 'token_13.pickle'
+        ROOMS_13 = {
+            "LEVEL13_ROOM1": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL13_ROOM2": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL13_ROOM3": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL13_ROOM4": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL13_ROOM5": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL13_VECE": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com"
+        }
 
+        TOKEN_14 = 'token_14.pickle'
+        ROOMS_14 = {
+            "LEVEL14_ROOM1": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL14_ROOM2": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL14_ROOM3": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL14_ROOM4": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
+            "LEVEL14_ROOM5": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com"
+        }
+
+        if level == '13':
+            if room == '1': return ROOMS_13['LEVEL13_ROOM1']
+            if room == '2': return ROOMS_13['LEVEL13_ROOM2']
+            if room == '3': return ROOMS_13['LEVEL13_ROOM3']
+            if room == '4': return ROOMS_13['LEVEL13_ROOM4']
+            if room == '5': return ROOMS_13['LEVEL13_ROOM5']
+            if room == 'vece': return ROOMS_13['LEVEL13_VECE']
+
+        elif level == '14':
+            pass
+
+        else:
+            print("ХЗ какой календарь")
 if __name__ == '__main__':
     main()
