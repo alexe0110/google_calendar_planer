@@ -14,20 +14,21 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 def main():
     method = Methods()
-    # method.get_calendar_list()
+    method.get_calendar_list()
     method.get_events_list(level='13', room='3', tmin='2020-03-03T07:33:24.149205Z', tmax='2020-05-03T07:33:24.149205Z')
-    # method.create_event(
-    #     summary="Внушительный Костя",
-    #     location="РАБота",
-    #     dateTime_time_start='19:00:00',
-    #     dateTime_date_start='2020-03-05',
-    #     dateTime_time_end='21:00:00',
-    #     dateTime_date_end='2020-03-05',
-    #     email='alexe0110@yandex.ru',
-    #     visibility='public',
-    #     description='Очень внушительынй',
-    #     calendarId='o685qbmudvk6su1j6di61utk8k@group.calendar.google.com',
-    # )
+    method.create_event(
+        summary="Событие 0918",
+        location="РАБота",
+        dateTime_time_start='19:00:00',
+        dateTime_date_start='2020-03-05',
+        dateTime_time_end='21:00:00',
+        dateTime_date_end='2020-03-05',
+        email='alexe0110@yandex.ru',
+        visibility='public',
+        description='Очень внушительынй',
+        level='13',
+        room='2'
+    )
 
 
 class Auth():
@@ -66,6 +67,9 @@ class Methods(Auth):
         :param quantity: Количество событий (необязательно) - по умолчанию 100 - удалено!
         :return: Предстоящие quantity событий в указанном календаре
         """
+        with open('bot_log', 'a') as f:
+            f.write(datetime.datetime.today().strftime("%Y.%m.%d-%H:%M:%S") + " " +
+                    "get_events_list; " + f"level: {level}; room: {room}; tmin: {tmin}; tmax: {tmax};\n")
 
         # Сегодня
         now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
@@ -98,6 +102,9 @@ class Methods(Auth):
         """
         :return: Список календарей
         """
+        with open('bot_log', 'a') as f:
+            f.write(datetime.datetime.today().strftime("%Y.%m.%d-%H:%M:%S") + " " +
+                    "get_calendar_list; \n")
         page_token = None
         while True:
             calendar_list = self.service.calendarList().list(pageToken=page_token).execute()
@@ -115,12 +122,13 @@ class Methods(Auth):
             dateTime_date_start,
             dateTime_time_end,
             dateTime_date_end,
+            level,
+            room,
             email,
             freq='DAILY',
             freq_count=1,  # test
             description='Какое то событие',
-            visibility='default',
-            calendarId='o685qbmudvk6su1j6di61utk8k@group.calendar.google.com'):
+            visibility='default'):
         """
         :param summary: Название
         :param location: Место
@@ -136,6 +144,13 @@ class Methods(Auth):
         :param calendarId: ID календаря (необязательно)
         :return: Ссылка на событие
         """
+
+        with open('bot_log', 'a') as f:
+            f.write(datetime.datetime.today().strftime("%Y.%m.%d-%H:%M:%S") + " " +
+                    "create_event; " +
+                    f"summary: {summary} ; location: {location} ; level: {level}; room: {room}; dateTime_time_start: {dateTime_time_start};  dateTime_time_end: {dateTime_time_end};\n")
+
+        calendarId = self.get_calendar_id(level, room)
         event = {
             'summary': summary,
             'location': location,
