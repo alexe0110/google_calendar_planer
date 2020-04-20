@@ -15,17 +15,16 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 def main():
     method = Methods()
     method.get_calendar_list()
-    method.get_events_list(level='13', room='3', tmin='2020-03-03T07:33:24.149205Z', tmax='2020-05-03T07:33:24.149205Z')
+    method.get_events_list(level='13', room='3', tmin='2020-04-19T07:33:24.149205Z', tmax='2020-05-10T07:33:24.149205Z')
     method.create_event(
-        summary="Событие 0918",
+        summary="Нефть все",
         location="РАБота",
-        dateTime_time_start='19:00:00',
-        dateTime_date_start='2020-03-05',
-        dateTime_time_end='21:00:00',
-        dateTime_date_end='2020-03-05',
-        email='alexe0110@yandex.ru',
+        dateTime_time_start='22:00:00',
+        dateTime_date_start='2020-04-20',
+        dateTime_time_end='23:00:00',
+        dateTime_date_end='2020-04-20',
         visibility='public',
-        description='Очень внушительынй',
+        description='Цена на майский фьючерс WTI достиг -40$ за баррель (спойлер: это пиз**ц).',
         level='13',
         room='2'
     )
@@ -124,7 +123,6 @@ class Methods(Auth):
             dateTime_date_end,
             level,
             room,
-            email,
             freq='DAILY',
             freq_count=1,  # test
             description='Какое то событие',
@@ -166,16 +164,6 @@ class Methods(Auth):
             'recurrence': [
                 f'RRULE:FREQ={freq};COUNT={freq_count}'
             ],
-            'attendees': [  # Участники
-                {'email': email},
-            ],
-            'reminders': {
-                'useDefault': False,
-                'overrides': [
-                    {'method': 'email', 'minutes': 60},
-                    {'method': 'popup', 'minutes': 10},
-                ],
-            },
             "visibility": visibility
         }
 
