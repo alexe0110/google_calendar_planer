@@ -181,7 +181,7 @@ class Methods(Auth):
         :return: Идентификатор
         """
         # Справочник календарей для переговорок
-        with open("alexe.json", "r") as read_file:
+        with open("mic.json", "r") as read_file:
             get_room = json.load(read_file)
 
         if level == '13':
