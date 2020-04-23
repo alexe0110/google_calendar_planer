@@ -91,11 +91,13 @@ class Methods(Auth):
                                                    orderBy='startTime').execute()
         events = events_result.get('items', [])
 
-        if not events:
-            print('No upcoming events found.')
-        for event in events:
-            start = event['start'].get('dateTime', event['start'].get('date'))
-            print(start, event['summary'])
+        # нужен объект реквест, но не нужен список человеческий
+        # if not events:
+        #     print('No upcoming events found.')
+        # for event in events:
+        #     start = event['start'].get('dateTime', event['start'].get('date'))
+        #     print(start, event['summary'])
+        return events
 
     def get_calendar_list(self):
         """
