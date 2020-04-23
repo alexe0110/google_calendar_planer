@@ -1,5 +1,5 @@
 from __future__ import print_function
-import datetime
+import datetime, json
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -181,32 +181,16 @@ class Methods(Auth):
         :return: Идентификатор
         """
         # Справочник календарей для переговорок
-        TOKEN_13 = 'token_13.pickle'
-        ROOMS_13 = {
-            "LEVEL13_ROOM1": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL13_ROOM2": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL13_ROOM3": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL13_ROOM4": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL13_ROOM5": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL13_VECE": "0prpnj29dl5gd2rbak8d2lc0ds@group.calendar.google.com"
-        }
-
-        TOKEN_14 = 'token_14.pickle'
-        ROOMS_14 = {
-            "LEVEL14_ROOM1": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL14_ROOM2": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL14_ROOM3": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL14_ROOM4": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
-            "LEVEL14_ROOM5": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com"
-        }
+        with open("alexe.json", "r") as read_file:
+            get_room = json.load(read_file)
 
         if level == '13':
-            if room == '1': return ROOMS_13['LEVEL13_ROOM1']
-            if room == '2': return ROOMS_13['LEVEL13_ROOM2']
-            if room == '3': return ROOMS_13['LEVEL13_ROOM3']
-            if room == '4': return ROOMS_13['LEVEL13_ROOM4']
-            if room == '5': return ROOMS_13['LEVEL13_ROOM5']
-            if room == 'vece': return ROOMS_13['LEVEL13_VECE']
+            if room == '1': return get_room['LEVEL13_ROOM1']
+            if room == '2': return get_room['LEVEL13_ROOM2']
+            if room == '3': return get_room['LEVEL13_ROOM3']
+            if room == '4': return get_room['LEVEL13_ROOM4']
+            if room == '5': return get_room['LEVEL13_ROOM5']
+            if room == 'vece': return get_room['LEVEL13_VECE']
 
         elif level == '14':
             pass
