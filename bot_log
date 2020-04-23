@@ -17,3 +17,5 @@
 2020.04.23-23:17:56 get_events_list; level: 13; room: 3; tmin: 2020-04-19T07:33:24.149205Z; tmax: 2020-05-10T07:33:24.149205Z;
 2020.04.23-23:19:15 get_calendar_list; 
 2020.04.23-23:19:16 get_events_list; level: 13; room: 3; tmin: 2020-04-19T07:33:24.149205Z; tmax: 2020-05-10T07:33:24.149205Z;
+2020.04.23-23:40:24 get_events_list; level: 13; room: 3; tmin: now; tmax: through_mounth;
+2020.04.23-23:44:18 get_events_list; level: 13; room: 3; tmin: now; tmax: through_mounth;

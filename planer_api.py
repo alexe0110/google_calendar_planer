@@ -183,21 +183,21 @@ class Methods(Auth):
         # Справочник календарей для переговорок
         TOKEN_13 = 'token_13.pickle'
         ROOMS_13 = {
-            "LEVEL13_ROOM1": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL13_ROOM2": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL13_ROOM3": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL13_ROOM4": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL13_ROOM5": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL13_VECE": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com"
+            "LEVEL13_ROOM1": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL13_ROOM2": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL13_ROOM3": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL13_ROOM4": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL13_ROOM5": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL13_VECE": "0prpnj29dl5gd2rbak8d2lc0ds@group.calendar.google.com"
         }
 
         TOKEN_14 = 'token_14.pickle'
         ROOMS_14 = {
-            "LEVEL14_ROOM1": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL14_ROOM2": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL14_ROOM3": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL14_ROOM4": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com",
-            "LEVEL14_ROOM5": "o685qbmudvk6su1j6di61utk8k@group.calendar.google.com"
+            "LEVEL14_ROOM1": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL14_ROOM2": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL14_ROOM3": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL14_ROOM4": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com",
+            "LEVEL14_ROOM5": "qj365109l3uhrc36nlr8q1ide8@group.calendar.google.com"
         }
 
         if level == '13':
